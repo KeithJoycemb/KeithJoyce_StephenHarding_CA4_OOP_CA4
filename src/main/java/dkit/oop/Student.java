@@ -12,7 +12,6 @@ public class Student {
     // (add here)
     public Student(Student studentCopy)
     {
-        System.out.println("Copy constructor worked");
         this.caoNumber = studentCopy.getCaoNumber();
         this.dateOfBirth = studentCopy.dateOfBirth;
         this.password = studentCopy.getPassword();
