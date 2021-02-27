@@ -10,6 +10,14 @@ public class Student {
     // Copies the contents of a Student object argument into
     // a new Student object, and returns that new object (a clone)
     // (add here)
+    public Student(Student studentCopy)
+    {
+        System.out.println("Copy constructor worked");
+        this.caoNumber = studentCopy.getCaoNumber();
+        this.dateOfBirth = studentCopy.dateOfBirth;
+        this.password = studentCopy.getPassword();
+        this.email = studentCopy.getEmail();
+    }
 
 
     // Constructor
@@ -22,7 +30,8 @@ public class Student {
 
     //public boolean verifyLoginCredentials( yyy-mm-dd, password);
 
-    public int getCaoNumber() {
+    public int getCaoNumber()
+    {
         return caoNumber;
     }
 
