@@ -17,16 +17,37 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "CAO Online - CA4" );
-        new App() .start();
+        new App().start();
     }
 
-    private void start() {
+    private void start()
+    {
 
         // load students
         StudentManager studentManager = new StudentManager();
 
         // load courses
         CourseManager courseManager= new CourseManager();
+
+        Student one = new Student(4233,"04/15/96","Password","EMAIL");
+        Student two = new Student(one);
+
+        System.out.println(two);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
