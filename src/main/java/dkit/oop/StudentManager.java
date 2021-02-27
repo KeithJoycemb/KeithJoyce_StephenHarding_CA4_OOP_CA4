@@ -3,26 +3,117 @@ package dkit.oop;
 // to manipulate student objects
 
 
-public class StudentManager {
-
-    // Store all students in data structure
 
 
-    public StudentManager() {
-        // Hardcode some values to get started
+import java.io.*;
+import java.util.Scanner;
+import java.util.ArrayList;
 
-        // later, load from text file "students.dat" and populate studentsMap
+public class StudentManager
+{
+    private ArrayList<Student> student;
+    private static Scanner keyboard = new Scanner(System.in);
+    public StudentManager(){this.student = new ArrayList<>(); }
+
+    // Hardcode some values to get started
+
+    // later, load from text file "students.dat" and populate studentsMap
+    protected void loadStudentsFromFile()
+    {
+        try (Scanner studentsFile = new Scanner(new BufferedReader(new FileReader("students.txt")))) {
+            String input;
+            while (studentsFile.hasNextLine()) {
+                input = studentsFile.nextLine();
+                String[] data = input.split(",");
+                int caoNumber = Integer.parseInt(data[0]);
+                String dateOfBirth = data[1];
+                String password = data[2];
+                String email = data[3];
+
+
+                Student readInStudents = new Student(caoNumber, dateOfBirth, password, email);
+                this.student.add(readInStudents);
+            }
+        } catch (FileNotFoundException fne) {
+            System.out.println("Could not find students.txt file");
+        }
     }
 
-//    public getStudent() {
-//    }
+
+    //    public getStudent() {
+   // }
 //
-//    public addStudent() {
-//    }
+    public void addStudent()
+    {
+        int caoNumber = loopUntilValidInt("caoNumber");
+         String dateOfBirth = enterField("dateOfBirth");
+         String password = enterField("password");
+         String email = enterField("email");
+
+         Student s = new Student(caoNumber,dateOfBirth,password,email);
+
+         if(this.student !=null)
+         {
+             if(s !=null)
+             {
+                 student.add(s);
+             }
+             else
+             {
+                 System.out.println("error adding student");
+             }
+         }
+         saveStudentToFile();
+    }
+
+    private void saveStudentToFile() {
+        try(BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt")))
+        {
+            for (Student student: student)
+            {
+                studentFile.write(student.getCaoNumber()+","+student.getDayOfBirth()+","+student.getEmail()+","+student.getPassword()+","+student.getClass());
+                studentFile.write("\n");
+            }
+        }
+        catch(IOException ioe)
+        {
+            System.out.println("could not save Students to file");
+        }
+    }
+
+    private int loopUntilValidInt(String intField)
+    {
+        boolean check = true;
+        while(check)
+        {
+            try
+            {
+                if(intField.equals("telephone"))
+                {
+                    int telephone = Integer.parseInt(enterField(intField));
+                    return telephone;
+                }
+            }
+            catch(NumberFormatException nfe)
+            {
+                System.out.println("Please enter a valid Phone Number");
+            }
+        }
+        return -1;
+    }
+    private String enterField(String field)
+    {
+        String input;
+        System.out.println("Please enter Students "+field+":");
+        input = keyboard.nextLine();
+        return input;
+    }
 //
 //    public removeStudent() {
 //    }
 
 //    isRegistered( caoNumber)
 //        students.isValid()
+
+
 }
