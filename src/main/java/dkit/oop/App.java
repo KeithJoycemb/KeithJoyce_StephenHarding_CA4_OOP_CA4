@@ -30,10 +30,6 @@ public class App
         CourseManager courseManager= new CourseManager();
 
         Student one = new Student(4233,"04/15/96","Password","EMAIL");
-        Student two = new Student(one);
-
-        System.out.println(two);
-
 
 
 
