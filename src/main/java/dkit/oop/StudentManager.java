@@ -2,9 +2,6 @@ package dkit.oop;
 // StudentManager encapsulates the storage and ability
 // to manipulate student objects
 
-
-
-
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -92,24 +89,12 @@ public class StudentManager
         return -1;
     }
 
-    private String enterField(String field) {
+    private String enterField(String field)
+    {
         String input;
         System.out.println("Please enter Students " + field + ":");
         input = keyboard.nextLine();
         return input;
-    }
-
-
-    public void removeStudent() {
-        if (this.student != null) {
-            int studentToDelete = isValid("StudentToRemove");
-            Student studentToRemove = getStudent(studentToDelete);
-            if (studentToRemove != null) {
-                student.remove(studentToRemove);
-            } else {
-                System.out.println("student could not be found");
-            }
-        }
     }
 
     private Student getStudent(int studentToFind)
@@ -123,6 +108,10 @@ public class StudentManager
         }
         return null;
     }
+
+
+
+
 
   //  isRegistered( caoNumber){
 

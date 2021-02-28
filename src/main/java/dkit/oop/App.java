@@ -11,29 +11,25 @@ import java.util.Scanner;
  *
  */
 
-
-
 //TESTING COMMIT stephen 2
-public class App {
+public class App
+{
     private static Scanner keyboard = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         System.out.println("CAO Online - CA4");
         new App().start();
-
     }
 
-    private void start() {
-
+    private void start()
+    {
         // load students
         StudentManager studentManager = new StudentManager();
         studentManager.loadStudentsFromFile();
-        mainMenuLoop(studentManager);
-
 
         // load courses
         CourseManager courseManager = new CourseManager();
-
 
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
@@ -42,23 +38,55 @@ public class App {
         // so we 'inject' or pass-in these objects.
         //
         CourseChoicesManager mgr = new CourseChoicesManager(studentManager, courseManager);
-
         // display a menu to do things
-
+        mainMenuLoop(studentManager, courseManager);
     }
 
-    private void adminMenuLoop(StudentManager studentManager) {
+    private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    {
+        boolean loop = true;
+        MainMenu menuOption;
+        int option = -1;
+        while (loop)
+        {
+            printMainMenu();
+            try
+            {
+                option = keyboard.nextInt();
+                keyboard.nextLine();
+                menuOption = MainMenu.values()[option];
+                switch (menuOption)
+                {
+                    case QUIT_APPLICATION:
+                        loop = false;
+                        break;
+                    case STUDENT_MENU:
+                        studentMenuLoop(studentManager, courseManager);
+                        break;
+                    case ADMIN_MENU:
+                        adminMenuLoop(studentManager, courseManager);
+                }
+            } catch (InputMismatchException ime) {
+                System.out.println("please enter a valid option");
+            }
+        }
+    }
 
+    private void adminMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    {
         boolean loop = true;
         AdminMenu menuOption;
         int option = -1;
-        while (loop) {
+        while (loop)
+        {
             printAdminMenu();
-            try {
+            try
+            {
                 option = keyboard.nextInt();
                 keyboard.nextLine();
                 menuOption = AdminMenu.values()[option];
-                switch (menuOption) {
+                switch (menuOption)
+                {
                     case SAVE_AND_EXIT:
                         loop = false;
                         break;
@@ -75,60 +103,90 @@ public class App {
                         studentManager.addStudent();
                         break;
                     case REMOVE_STUDENT:
-                        studentManager.removeStudent();
+                        //studentManager.removeStudent();
                     case DISPLAY_STUDENT:
+                        //studentManager.
                         //;
-
-
                 }
-            } catch (InputMismatchException ime) {
+            } catch (InputMismatchException ime)
+            {
                 System.out.println("please enter a valid option");
             }
         }
-
     }
 
-    private void printAdminMenu() {
+    private void studentMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    {
+        boolean loop = true;
+        StudentMenu menuOption;
+        int option = -1;
+        while (loop)
+        {
+            printStudentMenu();
+            try {
+                option = keyboard.nextInt();
+                keyboard.nextLine();
+                menuOption = StudentMenu.values()[option];
+                switch (menuOption)
+                {
+                    case QUIT_APPLICATION:
+                        loop = false;
+                        break;
+                    case LOGIN:
+                        //;
+                        break;
+                    case DISPLAY_COURSE:
+                        //;
+                        break;
+                    case DISPLAY_ALL_COURSES:
+                        //;
+                        break;
+                    case DISPLAY_CURRENT_CHOICES:
+                        //;
+                        break;
+                    case UPDATE_CHOICES:
+                        //;
+                        break;
+                    case LOG_OUT:
+                        //;
+                        break;
+
+                }
+            } catch (InputMismatchException ime)
+            {
+                System.out.println("please enter a valid option");
+            }
+        }
+    }
+
+    private void printAdminMenu()
+    {
         System.out.println("\n Options to select:");
-        for (int i = 0; i < AdminMenu.values().length; i++) {
+        for (int i = 0; i < AdminMenu.values().length; i++)
+        {
             System.out.println("\t" + i + ". " + AdminMenu.values()[i].toString());
         }
         System.out.print("Enter a number to select the option (0 to quit):>");
     }
 
-    private void printMainMenu() {
+    private void printMainMenu()
+    {
         System.out.println("\n Options to select:");
-        for (int i = 0; i < MainMenu.values().length; i++) {
+        for (int i = 0; i < MainMenu.values().length; i++)
+        {
             System.out.println("\t" + i + ". " + MainMenu.values()[i].toString());
         }
         System.out.print("Enter a number to select the option (0 to quit):>");
     }
 
-    private void mainMenuLoop(StudentManager studentManager) {
-
-        boolean loop = true;
-        MainMenu menuOption;
-        int option = -1;
-        while (loop) {
-            printMainMenu();
-            try {
-                option = keyboard.nextInt();
-                keyboard.nextLine();
-                menuOption = MainMenu.values()[option];
-                switch (menuOption) {
-                    case QUIT_APPLICATION:
-                        loop = false;
-                        break;
-                    case STUDENT_MENU:
-                        //;
-                        break;
-                    case ADMIN_MENU:
-                        adminMenuLoop(studentManager);
-                }
-            } catch (InputMismatchException ime) {
-                System.out.println("please enter a valid option");
-            }
+    private void printStudentMenu()
+    {
+        System.out.println("\n Options to select:");
+        for (int i = 0; i < StudentMenu.values().length; i++)
+        {
+            System.out.println("\t" + i + ". " + StudentMenu.values()[i].toString());
         }
+        System.out.print("Enter a number to select the option (0 to quit):>");
         // manual testing of mgr public interface
 
 //        if ( mgr.login(22224444, "xxxx","bbbb") )
@@ -139,7 +197,6 @@ public class App {
 //        }
 //        else
 //            System.out.println("Not logged in - try again");
-
 
         //mgr.saveToFile();
 
