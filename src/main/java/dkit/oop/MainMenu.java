@@ -1,0 +1,12 @@
+package dkit.oop;
+
+public enum MainMenu {
+    SAVE_AND_EXIT,
+    REMOVE_COURSE,
+    DISPLAY_ALL_COURSES,
+    DISPLAY_COURSE_DETAILS,
+    ADD_STUDENT,
+    REMOVE_STUDENT,
+    DISPLAY_STUDENT,
+    ADD_COURSE;
+}

@@ -9,21 +9,23 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class StudentManager {
+public class StudentManager
+{
     private ArrayList<Student> student;
     private static Scanner keyboard = new Scanner(System.in);
 
-    public StudentManager() {
+    public StudentManager()
+    {
         this.student = new ArrayList<>();
     }
 
-    // Hardcode some values to get started
 
-    // later, load from text file "students.dat" and populate studentsMap
     protected void loadStudentsFromFile() {
-        try (Scanner studentsFile = new Scanner(new BufferedReader(new FileReader("students.txt")))) {
+        try (Scanner studentsFile = new Scanner(new BufferedReader(new FileReader("students.txt"))))
+        {
             String input;
-            while (studentsFile.hasNextLine()) {
+            while (studentsFile.hasNextLine())
+            {
                 input = studentsFile.nextLine();
                 String[] data = input.split(",");
                 int caoNumber = Integer.parseInt(data[0]);
@@ -31,21 +33,18 @@ public class StudentManager {
                 String password = data[2];
                 String email = data[3];
 
-
                 Student readInStudents = new Student(caoNumber, dateOfBirth, password, email);
                 this.student.add(readInStudents);
             }
-        } catch (FileNotFoundException fne) {
+        }
+        catch (FileNotFoundException fne)
+        {
             System.out.println("Could not find students.txt file");
         }
     }
 
-
-    //    public getStudent() {
-    // }
-//
     public void addStudent() {
-        int caoNumber = loopUntilValidInt("caoNumber");
+        int caoNumber = isValid("caoNumber");
         String dateOfBirth = enterField("dateOfBirth");
         String password = enterField("password");
         String email = enterField("email");
@@ -59,21 +58,26 @@ public class StudentManager {
                 System.out.println("error adding student");
             }
         }
-        saveStudentToFile();
     }
 
-    private void saveStudentToFile() {
-        try (BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt"))) {
-            for (Student student : student) {
-                studentFile.write(student.getCaoNumber() + "," + student.getDayOfBirth() + "," + student.getEmail() + "," + student.getPassword() + "," + student.getClass());
+    private void saveStudentToFile() throws IOException
+    {
+        try (BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt")))
+        {
+            for (Student student : student)
+            {
+                studentFile.write(student.getCaoNumber() + "," + student.getDayOfBirth() + "," + student.getEmail()
+                        + "," + student.getPassword());
                 studentFile.write("\n");
             }
-        } catch (IOException ioe) {
+        }
+        catch (FileNotFoundException fne)
+        {
             System.out.println("could not save Students to file");
         }
     }
 
-    private int loopUntilValidInt(String intField) {
+    private int isValid(String intField) {
         boolean check = true;
         while (check) {
             try {
@@ -95,21 +99,20 @@ public class StudentManager {
         return input;
     }
 
-    //
+
     public void removeStudent() {
         if (this.student != null) {
-            int studentToDelete = loopUntilValidInt("StudentToRemove");
-            Student studentToRemove = findStudent(studentToDelete);
+            int studentToDelete = isValid("StudentToRemove");
+            Student studentToRemove = getStudent(studentToDelete);
             if (studentToRemove != null) {
                 student.remove(studentToRemove);
             } else {
                 System.out.println("student could not be found");
             }
         }
-
-
     }
-    private Student findStudent(int studentToFind)
+
+    private Student getStudent(int studentToFind)
     {
         for(Student student: student)
         {
@@ -121,8 +124,10 @@ public class StudentManager {
         return null;
     }
 
-//    isRegistered( caoNumber)
-//        students.isValid()
+  //  isRegistered( caoNumber){
+
+  //  }
+   //     students.isValid()
 
 
 }
