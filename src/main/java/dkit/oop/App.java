@@ -31,20 +31,6 @@ public class App
 
         Student one = new Student(4233,"04/15/96","Password","EMAIL");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
         // This CourseChoicesManager component depends on the
