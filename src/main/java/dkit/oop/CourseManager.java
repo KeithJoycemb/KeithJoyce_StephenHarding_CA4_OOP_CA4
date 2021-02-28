@@ -21,7 +21,6 @@ import java.util.function.Function;
 
 public class CourseManager
 {
-
     // Store all the Course details.
     // Requires fast access given courseId.
     private ArrayList<Course> CourseInfo;
@@ -88,7 +87,7 @@ public class CourseManager
        // }
     }
 
-   private Course searchForCourse(String courseToFind)
+   public Course searchForCourse(String courseToFind)
    {
        for(Course course : CourseInfo)
        {
@@ -133,6 +132,22 @@ public class CourseManager
           this.CourseInfo.add(addCourse);
       }
 
+      public void deleteCourse()
+      {
+          if(this.CourseInfo != null)
+          {
+              String courseToFind = enterInformation("Course ID to remove");
+              Course courseToDelete = searchForCourse(courseToFind);
+              if(courseToDelete != null)
+              {
+                  System.out.println(FontColours.GREEN + "Removed course from system" + FontColours.RESET);
+              }
+              else
+              {
+                  System.out.println(FontColours.RED + "There is no course matching that ID" + FontColours.RESET);
+              }
+          }
+      }
 }
 
 
