@@ -31,8 +31,10 @@ public class App {
 
 
 
+
         // load courses
         CourseManager courseManager = new CourseManager();
+
 
 
 
@@ -71,7 +73,7 @@ public class App {
                         //;
                         break;
                     case DISPLAY_ALL_COURSES:
-                        //  ;
+                        courseManager.getAllCourses(); ;
                         break;
                     case COURSE_DETAILS:
                        // ;
