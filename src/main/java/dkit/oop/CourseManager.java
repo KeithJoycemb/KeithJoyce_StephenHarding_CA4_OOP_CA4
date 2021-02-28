@@ -1,9 +1,13 @@
 package dkit.oop;
+import static java.util.stream.Collectors.toMap;
 
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * CoursesManager
@@ -21,6 +25,8 @@ public class CourseManager
     // Store all the Course details.
     // Requires fast access given courseId.
     private ArrayList<Course> CourseInfo;
+
+    private static Scanner keyboard = new Scanner(System.in);
 
     protected void loadCoursesFromFile()
     {
@@ -46,7 +52,7 @@ public class CourseManager
         }
     }
 
-    public void saveCoursesToFile()
+    public void saveCoursesToFile() throws IOException
     {
         try(BufferedWriter saveCoursesToFile = new BufferedWriter(new FileWriter("courses.txt")))
         {
@@ -62,10 +68,26 @@ public class CourseManager
         }
     }
 
+    private static String enterInformation(String Information)
+    {
+        String input;
+        System.out.print("Please enter the " + Information + " : ");
+        input = keyboard.nextLine();
+        return input;
+    }
+
     public CourseManager()
     {
         // Hardcode some values to get started
         // load from text file "courses.dat" and populate coursesMap
+
+        //Map<Course, Integer> coursesMap = new HashMap<>();
+        //for(Course course : CourseInfo)
+        //{
+        //    coursesMap.put(course, course.length());
+       // }
+
+
     }
 
 //    public  getCourse( ) {
@@ -75,11 +97,18 @@ public class CourseManager
 //    public  getAllCourses() {
 //    }
 //
-//    public addCourse() {
-//    }
-//
-//    public removeCourse() {
-//    }
+
+      public void addCourse()
+      {
+          String courseId = enterInformation("Course ID");
+          String level = enterInformation("Course Level");
+          String title = enterInformation("Course Title");
+          String institution = enterInformation("Course Institution");
+
+          Course addCourse = new Course(courseId,level,title,institution);
+          this.CourseInfo.add(addCourse);
+      }
+
 
     // editCourse(courseId);       // not required for this iteration
 
