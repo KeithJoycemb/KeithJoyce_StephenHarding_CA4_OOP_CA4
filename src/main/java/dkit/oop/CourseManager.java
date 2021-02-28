@@ -86,17 +86,41 @@ public class CourseManager
         //{
         //    coursesMap.put(course, course.length());
        // }
-
-
     }
 
-//    public  getCourse( ) {
-//    }
-//
-//
-//    public  getAllCourses() {
-//    }
-//
+   private Course searchForCourse(String courseToFind)
+   {
+       for(Course course : CourseInfo)
+       {
+           if(course.getCourseId().equals(courseToFind))
+           {
+               return course;
+           }
+       }
+       return null;
+   }
+
+      public void getCourse()
+      {
+          String CourseInfoToPrint = enterInformation("Course ID to find");
+          Course courseToPrint = searchForCourse(CourseInfoToPrint);
+          if(courseToPrint != null)
+          {
+              System.out.println(courseToPrint);
+          }
+          else
+          {
+              System.out.println(FontColours.RED + "This course does not exist in the system" + FontColours.RESET);
+          }
+      }
+
+      public void getAllCourses()
+      {
+          for(Course allCourses : CourseInfo)
+          {
+              System.out.println(allCourses);
+          }
+      }
 
       public void addCourse()
       {
@@ -108,9 +132,6 @@ public class CourseManager
           Course addCourse = new Course(courseId,level,title,institution);
           this.CourseInfo.add(addCourse);
       }
-
-
-    // editCourse(courseId);       // not required for this iteration
 
 }
 
