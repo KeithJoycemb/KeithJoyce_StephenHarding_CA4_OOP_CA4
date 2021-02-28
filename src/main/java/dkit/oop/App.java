@@ -3,6 +3,7 @@ package dkit.oop;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  *
  * Notes:
@@ -10,7 +11,7 @@ import java.util.Scanner;
  *
  */
 
-
+//FIXED REPO PLS
 public class App
 {
     private static Scanner keyboard = new Scanner(System.in);
@@ -19,10 +20,10 @@ public class App
     {
         System.out.println("CAO Online - CA4");
         new App().start();
-
     }
-    private void start() {
 
+    private void start()
+    {
         // load students
         StudentManager studentManager = new StudentManager();
         studentManager.loadStudentsFromFile();
@@ -31,50 +32,19 @@ public class App
         CourseManager courseManager = new CourseManager();
         courseManager.loadCoursesFromFile();
 
-
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
         // This CourseChoicesManager component depends on the
         // StudentManager and the CourseManager,
         // so we 'inject' or pass-in these objects.
+        //
         CourseChoicesManager mgr = new CourseChoicesManager(studentManager, courseManager);
 
         // display a menu to do things
-        mainMenuLoop(studentManager, courseManager);
-
+        mainMenuLoop(studentManager ,courseManager);
     }
 
-    private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager)
-    {
-        boolean loop = true;
-        MainMenu menuOption;
-        int option = -1;
-        while (loop)
-        {
-            printMainMenu();
-            try {
-                option = keyboard.nextInt();
-                keyboard.nextLine();
-                menuOption = MainMenu.values()[option];
-                switch (menuOption)
-                {
-                    case QUIT_APPLICATION:
-                        loop = false;
-                        break;
-                    case STUDENT_MENU:
-                        studentMenuLoop(studentManager,courseManager);
-                        break;
-                    case ADMIN_MENU:
-                        adminMenuLoop(studentManager,courseManager);
-                }
-            } catch (InputMismatchException ime)
-            {
-                System.out.println("please enter a valid option");
-            }
-        }
-    }
-
-    private void adminMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    private void adminMenuLoop(StudentManager studentManager,CourseManager courseManager)
     {
         boolean loop = true;
         AdminMenu menuOption;
@@ -91,6 +61,9 @@ public class App
                 {
                     case QUIT_APPLICATION:
                         loop = false;
+                        break;
+                    case ADD_COURSE:
+                        courseManager.addCourse();
                         break;
                     case REMOVE_COURSE:
                         //;
@@ -109,7 +82,40 @@ public class App
                     case DISPLAY_STUDENT:
                         //;
                     case SAVE_AND_EXIT:
-                        //;
+                        studentManager.saveStudentToFile();
+                        courseManager.saveCoursesToFile();
+                        loop = false;
+                        break;
+                }
+            } catch (InputMismatchException ime)
+            {
+                System.out.println("please enter a valid option");
+            }
+        }
+    }
+
+    private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    {
+        boolean loop = true;
+        MainMenu menuOption;
+        int option = -1;
+        while (loop)
+        {
+            printMainMenu();
+            try
+            {
+                option = keyboard.nextInt();
+                keyboard.nextLine();
+                menuOption = MainMenu.values()[option];
+                switch (menuOption) {
+                    case QUIT_APPLICATION:
+                        loop = false;
+                        break;
+                    case STUDENT_MENU:
+                        studentMenuLoop(studentManager,courseManager);
+                        break;
+                    case ADMIN_MENU:
+                        adminMenuLoop(studentManager, courseManager);
                 }
             } catch (InputMismatchException ime)
             {
@@ -190,4 +196,5 @@ public class App
         }
         System.out.print("Enter a number to select the option (0 to quit):>");
     }
+
 }
