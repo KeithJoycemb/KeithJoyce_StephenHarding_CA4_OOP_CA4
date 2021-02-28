@@ -2,9 +2,6 @@ package dkit.oop;
 // StudentManager encapsulates the storage and ability
 // to manipulate student objects
 
-
-
-
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -100,9 +97,6 @@ public class StudentManager
         return input;
     }
 
-
-
-
     private Student getStudent(int studentToFind)
     {
         for(Student student: student)
@@ -114,29 +108,6 @@ public class StudentManager
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
