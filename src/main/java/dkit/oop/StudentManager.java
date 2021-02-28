@@ -9,17 +9,18 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class StudentManager
-{
+public class StudentManager {
     private ArrayList<Student> student;
     private static Scanner keyboard = new Scanner(System.in);
-    public StudentManager(){this.student = new ArrayList<>(); }
+
+    public StudentManager() {
+        this.student = new ArrayList<>();
+    }
 
     // Hardcode some values to get started
 
     // later, load from text file "students.dat" and populate studentsMap
-    protected void loadStudentsFromFile()
-    {
+    protected void loadStudentsFromFile() {
         try (Scanner studentsFile = new Scanner(new BufferedReader(new FileReader("students.txt")))) {
             String input;
             while (studentsFile.hasNextLine()) {
@@ -41,76 +42,84 @@ public class StudentManager
 
 
     //    public getStudent() {
-   // }
+    // }
 //
-    public void addStudent()
-    {
+    public void addStudent() {
         int caoNumber = loopUntilValidInt("caoNumber");
-         String dateOfBirth = enterField("dateOfBirth");
-         String password = enterField("password");
-         String email = enterField("email");
+        String dateOfBirth = enterField("dateOfBirth");
+        String password = enterField("password");
+        String email = enterField("email");
 
-         Student s = new Student(caoNumber,dateOfBirth,password,email);
+        Student s = new Student(caoNumber, dateOfBirth, password, email);
 
-         if(this.student !=null)
-         {
-             if(s !=null)
-             {
-                 student.add(s);
-             }
-             else
-             {
-                 System.out.println("error adding student");
-             }
-         }
-         saveStudentToFile();
+        if (this.student != null) {
+            if (s != null) {
+                student.add(s);
+            } else {
+                System.out.println("error adding student");
+            }
+        }
+        saveStudentToFile();
     }
 
     private void saveStudentToFile() {
-        try(BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt")))
-        {
-            for (Student student: student)
-            {
-                studentFile.write(student.getCaoNumber()+","+student.getDayOfBirth()+","+student.getEmail()+","+student.getPassword()+","+student.getClass());
+        try (BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt"))) {
+            for (Student student : student) {
+                studentFile.write(student.getCaoNumber() + "," + student.getDayOfBirth() + "," + student.getEmail() + "," + student.getPassword() + "," + student.getClass());
                 studentFile.write("\n");
             }
-        }
-        catch(IOException ioe)
-        {
+        } catch (IOException ioe) {
             System.out.println("could not save Students to file");
         }
     }
 
-    private int loopUntilValidInt(String intField)
-    {
+    private int loopUntilValidInt(String intField) {
         boolean check = true;
-        while(check)
-        {
-            try
-            {
-                if(intField.equals("telephone"))
-                {
-                    int telephone = Integer.parseInt(enterField(intField));
-                    return telephone;
+        while (check) {
+            try {
+                if (intField.equals("caoNumber")) {
+                    int caoNumber = Integer.parseInt(enterField(intField));
+                    return caoNumber;
                 }
-            }
-            catch(NumberFormatException nfe)
-            {
-                System.out.println("Please enter a valid Phone Number");
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter a valid Cao Number");
             }
         }
         return -1;
     }
-    private String enterField(String field)
-    {
+
+    private String enterField(String field) {
         String input;
-        System.out.println("Please enter Students "+field+":");
+        System.out.println("Please enter Students " + field + ":");
         input = keyboard.nextLine();
         return input;
     }
-//
-//    public removeStudent() {
-//    }
+
+    //
+    public void removeStudent() {
+        if (this.student != null) {
+            int studentToDelete = loopUntilValidInt("StudentToRemove");
+            Student studentToRemove = findStudent(studentToDelete);
+            if (studentToRemove != null) {
+                student.remove(studentToRemove);
+            } else {
+                System.out.println("student could not be found");
+            }
+        }
+
+
+    }
+    private Student findStudent(int studentToFind)
+    {
+        for(Student student: student)
+        {
+            if(student.getCaoNumber()==(studentToFind))
+            {
+                return student;
+            }
+        }
+        return null;
+    }
 
 //    isRegistered( caoNumber)
 //        students.isValid()

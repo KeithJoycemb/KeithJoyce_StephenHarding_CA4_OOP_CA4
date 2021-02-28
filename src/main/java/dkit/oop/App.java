@@ -24,7 +24,11 @@ public class App
     private void start() {
 
         // load students
+        System.out.println("potato");
         StudentManager studentManager = new StudentManager();
+        studentManager.loadStudentsFromFile();
+        studentManager.addStudent();
+
 
         // load courses
         CourseManager courseManager= new CourseManager();
