@@ -2,9 +2,6 @@ package dkit.oop;
 // StudentManager encapsulates the storage and ability
 // to manipulate student objects
 
-
-
-
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -20,7 +17,8 @@ public class StudentManager
     }
 
 
-    protected void loadStudentsFromFile() {
+    protected void loadStudentsFromFile()
+    {
         try (Scanner studentsFile = new Scanner(new BufferedReader(new FileReader("students.txt"))))
         {
             String input;
@@ -43,7 +41,8 @@ public class StudentManager
         }
     }
 
-    public void addStudent() {
+    public void addStudent()
+    {
         int caoNumber = isValid("caoNumber");
         String dateOfBirth = enterField("dateOfBirth");
         String password = enterField("password");
@@ -51,8 +50,10 @@ public class StudentManager
 
         Student s = new Student(caoNumber, dateOfBirth, password, email);
 
-        if (this.student != null) {
-            if (s != null) {
+        if (this.student != null)
+        {
+            if (s != null)
+            {
                 student.add(s);
             } else {
                 System.out.println("error adding student");
@@ -77,21 +78,25 @@ public class StudentManager
         }
     }
 
-    private int isValid(String intField) {
+    private int isValid(String intField)
+    {
         boolean check = true;
-        while (check) {
-            try {
-                if (intField.equals("caoNumber")) {
+        while (check)
+        {
+            try
+            {
+                if (intField.equals("caoNumber"))
+                {
                     int caoNumber = Integer.parseInt(enterField(intField));
                     return caoNumber;
                 }
-            } catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe)
+            {
                 System.out.println("Please enter a valid Cao Number");
             }
         }
         return -1;
     }
-
 
     private String enterField(String field)
     {
@@ -112,7 +117,6 @@ public class StudentManager
         }
         return null;
     }
-
   //  isRegistered( caoNumber){
 
   //  }

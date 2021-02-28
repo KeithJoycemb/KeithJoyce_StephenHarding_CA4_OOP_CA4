@@ -12,7 +12,8 @@ package dkit.oop;
 
 import java.util.*;
 
-public class CourseChoicesManager {
+public class CourseChoicesManager
+{
 
     // reference to constructor injected studentManager
     private StudentManager studentManager;
