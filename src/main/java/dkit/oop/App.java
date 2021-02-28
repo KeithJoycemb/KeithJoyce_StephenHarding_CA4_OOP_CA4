@@ -11,7 +11,7 @@ import java.util.List;
 
 
 
-//TESTING COMMIT stephen
+//TESTING COMMIT stephen 2
 public class App 
 {
     public static void main( String[] args )
@@ -30,20 +30,6 @@ public class App
         CourseManager courseManager= new CourseManager();
 
         Student one = new Student(4233,"04/15/96","Password","EMAIL");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
