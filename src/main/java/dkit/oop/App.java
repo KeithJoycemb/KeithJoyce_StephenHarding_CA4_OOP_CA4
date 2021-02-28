@@ -14,28 +14,24 @@ import java.util.Scanner;
 
 
 //TESTING COMMIT stephen 2
-public class App {
+public class App 
+{
     private static Scanner keyboard = new Scanner(System.in);
-
-    public static void main(String[] args) {
+  
+    public static void main(String[] args) 
+    {
         System.out.println("CAO Online - CA4");
         new App().start();
-
     }
 
-    private void start() {
-
+    private void start() 
+    {
         // load students
         StudentManager studentManager = new StudentManager();
         studentManager.loadStudentsFromFile();
 
-
-
         // load courses
         CourseManager courseManager = new CourseManager();
-
-
-
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
         // This CourseChoicesManager component depends on the
@@ -43,13 +39,13 @@ public class App {
         // so we 'inject' or pass-in these objects.
         //
         CourseChoicesManager mgr = new CourseChoicesManager(studentManager, courseManager);
-
         // display a menu to do things
         mainMenuLoop(studentManager ,courseManager);
 
     }
 
-    private void adminMenuLoop(StudentManager studentManager,CourseManager courseManager) {
+    private void adminMenuLoop(StudentManager studentManager,CourseManager courseManager) 
+    {
 
         boolean loop = true;
         AdminMenu menuOption;
@@ -83,17 +79,16 @@ public class App {
                         studentManager.removeStudent();
                     case DISPLAY_STUDENT:
                         //;
-
-
                 }
-            } catch (InputMismatchException ime) {
+            } catch (InputMismatchException ime) 
+            {
                 System.out.println("please enter a valid option");
             }
         }
-
     }
 
-    private void printAdminMenu() {
+    private void printAdminMenu() 
+    {
         System.out.println("\n Options to select:");
         for (int i = 0; i < AdminMenu.values().length; i++) {
             System.out.println("\t" + i + ". " + AdminMenu.values()[i].toString());
@@ -101,7 +96,8 @@ public class App {
         System.out.print("Enter a number to select the option (0 to quit):>");
     }
 
-    private void printMainMenu() {
+    private void printMainMenu() 
+    {
         System.out.println("\n Options to select:");
         for (int i = 0; i < MainMenu.values().length; i++) {
             System.out.println("\t" + i + ". " + MainMenu.values()[i].toString());
@@ -109,7 +105,8 @@ public class App {
         System.out.print("Enter a number to select the option (0 to quit):>");
     }
 
-    private void printStudentMenu() {
+    private void printStudentMenu() 
+    {
         System.out.println("\n Options to select:");
         for (int i = 0; i < StudentMenu.values().length; i++) {
             System.out.println("\t" + i + ". " + StudentMenu.values()[i].toString());
@@ -118,7 +115,8 @@ public class App {
     }
 
 
-    private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager) {
+    private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager)
+    {
         boolean loop = true;
         MainMenu menuOption;
         int option = -1;
@@ -145,7 +143,6 @@ public class App {
     }
         private void studentMenuLoop(StudentManager studentManager, CourseManager courseManager)
         {
-
             boolean loop = true;
             StudentMenu menuOption;
             int option = -1;
@@ -200,4 +197,3 @@ public class App {
 
     }
 }
-

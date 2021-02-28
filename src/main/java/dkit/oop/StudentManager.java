@@ -92,6 +92,7 @@ public class StudentManager
         return -1;
     }
 
+
     private String enterField(String field)
     {
         String input;
@@ -99,9 +100,6 @@ public class StudentManager
         input = keyboard.nextLine();
         return input;
     }
-
-
-
 
     private Student getStudent(int studentToFind)
     {
@@ -114,33 +112,6 @@ public class StudentManager
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //  isRegistered( caoNumber){
 
