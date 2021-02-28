@@ -31,7 +31,8 @@ public class CourseChoicesManager {
     // This is called "Dependency Injection", meaning that we
     // inject (or pass in) objects that this class requires to do its job.
     //
-    CourseChoicesManager(StudentManager studentManager, CourseManager courseManager) {
+    CourseChoicesManager(StudentManager studentManager, CourseManager courseManager)
+    {
         this.studentManager = studentManager;
         this.courseManager = courseManager;
 
