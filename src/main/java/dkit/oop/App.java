@@ -1,6 +1,8 @@
 package dkit.oop;
 
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -12,24 +14,26 @@ import java.util.List;
 
 
 //TESTING COMMIT stephen 2
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "CAO Online - CA4" );
+public class App {
+    private static Scanner keyboard = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        System.out.println("CAO Online - CA4");
         new App().start();
+
     }
 
-    private void start()
-    {
+    private void start() {
 
         // load students
         StudentManager studentManager = new StudentManager();
+        studentManager.loadStudentsFromFile();
+        mainMenuLoop(studentManager);
+
 
         // load courses
-        CourseManager courseManager= new CourseManager();
+        CourseManager courseManager = new CourseManager();
 
-        Student one = new Student(4233,"04/15/96","Password","EMAIL");
 
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
@@ -40,6 +44,91 @@ public class App
         CourseChoicesManager mgr = new CourseChoicesManager(studentManager, courseManager);
 
         // display a menu to do things
+
+    }
+
+    private void adminMenuLoop(StudentManager studentManager) {
+
+        boolean loop = true;
+        AdminMenu menuOption;
+        int option = -1;
+        while (loop) {
+            printAdminMenu();
+            try {
+                option = keyboard.nextInt();
+                keyboard.nextLine();
+                menuOption = AdminMenu.values()[option];
+                switch (menuOption) {
+                    case SAVE_AND_EXIT:
+                        loop = false;
+                        break;
+                    case REMOVE_COURSE:
+                        //;
+                        break;
+                    case DISPLAY_ALL_COURSES:
+                        //  ;
+                        break;
+                    case COURSE_DETAILS:
+                        // ;
+                        break;
+                    case ADD_STUDENT:
+                        studentManager.addStudent();
+                        break;
+                    case REMOVE_STUDENT:
+                        studentManager.removeStudent();
+                    case DISPLAY_STUDENT:
+                        //;
+
+
+                }
+            } catch (InputMismatchException ime) {
+                System.out.println("please enter a valid option");
+            }
+        }
+
+    }
+
+    private void printAdminMenu() {
+        System.out.println("\n Options to select:");
+        for (int i = 0; i < AdminMenu.values().length; i++) {
+            System.out.println("\t" + i + ". " + AdminMenu.values()[i].toString());
+        }
+        System.out.print("Enter a number to select the option (0 to quit):>");
+    }
+
+    private void printMainMenu() {
+        System.out.println("\n Options to select:");
+        for (int i = 0; i < MainMenu.values().length; i++) {
+            System.out.println("\t" + i + ". " + MainMenu.values()[i].toString());
+        }
+        System.out.print("Enter a number to select the option (0 to quit):>");
+    }
+
+    private void mainMenuLoop(StudentManager studentManager) {
+
+        boolean loop = true;
+        MainMenu menuOption;
+        int option = -1;
+        while (loop) {
+            printMainMenu();
+            try {
+                option = keyboard.nextInt();
+                keyboard.nextLine();
+                menuOption = MainMenu.values()[option];
+                switch (menuOption) {
+                    case QUIT_APPLICATION:
+                        loop = false;
+                        break;
+                    case STUDENT_MENU:
+                        //;
+                        break;
+                    case ADMIN_MENU:
+                        adminMenuLoop(studentManager);
+                }
+            } catch (InputMismatchException ime) {
+                System.out.println("please enter a valid option");
+            }
+        }
         // manual testing of mgr public interface
 
 //        if ( mgr.login(22224444, "xxxx","bbbb") )
@@ -56,3 +145,4 @@ public class App
 
     }
 }
+
