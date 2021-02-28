@@ -11,7 +11,6 @@ import java.util.Scanner;
  *
  */
 
-//TESTING COMMIT stephen 2
 public class App
 {
     private static Scanner keyboard = new Scanner(System.in);
@@ -202,4 +201,3 @@ public class App
 
     }
 }
-
