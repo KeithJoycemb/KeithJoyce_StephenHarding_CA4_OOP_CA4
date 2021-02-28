@@ -113,6 +113,10 @@ public class CourseManager
               System.out.println(FontColours.RED + "This course does not exist in the system" + FontColours.RESET);
           }
       }
+      public void printCourseDetails()
+      {
+          System.out.println("input Course ");
+      }
 
       public void getAllCourses()
       {
