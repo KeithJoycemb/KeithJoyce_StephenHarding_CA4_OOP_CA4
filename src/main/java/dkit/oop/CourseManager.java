@@ -1,14 +1,11 @@
 package dkit.oop;
 import static java.util.stream.Collectors.toMap;
-
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
-
 /**
  * CoursesManager
  * This software component Encapsulates the storage and management of
@@ -21,11 +18,13 @@ import java.util.function.Function;
 
 public class CourseManager
 {
-    // Store all the Course details.
-    // Requires fast access given courseId.
     private ArrayList<Course> CourseInfo;
-
     private static Scanner keyboard = new Scanner(System.in);
+
+    public CourseManager()
+    {
+        this.CourseInfo = new ArrayList<>();
+    }
 
     protected void loadCoursesFromFile()
     {
@@ -51,7 +50,7 @@ public class CourseManager
         }
     }
 
-    public void saveCoursesToFile() throws IOException
+    public void saveCoursesToFile()
     {
         try(BufferedWriter saveCoursesToFile = new BufferedWriter(new FileWriter("courses.txt")))
         {
@@ -61,7 +60,7 @@ public class CourseManager
                 saveCoursesToFile.write("\n");
             }
         }
-        catch(FileNotFoundException fne)
+        catch(IOException ioe)
         {
             System.out.println(FontColours.RED + "System could not load in course information to file" + FontColours.RESET);
         }
@@ -74,89 +73,77 @@ public class CourseManager
         input = keyboard.nextLine();
         return input;
     }
+    //Map<Course, Integer> coursesMap = new HashMap<>();
+    //for(Course course : CourseInfo)
+    //{
+    //    coursesMap.put(course, course.length());
+    // }
 
-    public CourseManager()
+    private Course searchForCourse(String courseToFind)
     {
-        // Hardcode some values to get started
-        // load from text file "courses.dat" and populate coursesMap
-
-        //Map<Course, Integer> coursesMap = new HashMap<>();
-        //for(Course course : CourseInfo)
-        //{
-        //    coursesMap.put(course, course.length());
-       // }
+        for(Course course : CourseInfo)
+        {
+            if(course.getCourseId().equals(courseToFind))
+            {
+                return course;
+            }
+        }
+        return null;
     }
 
-   public Course searchForCourse(String courseToFind)
-   {
-       for(Course course : CourseInfo)
-       {
-           if(course.getCourseId().equals(courseToFind))
-           {
-               return course;
-           }
-       }
-       return null;
-   }
+    public void getCourse()
+    {
+        String CourseInfoToPrint = enterInformation("Course ID to find");
+        Course courseToPrint = searchForCourse(CourseInfoToPrint);
+        if(courseToPrint != null)
+        {
+            System.out.println(courseToPrint);
+        }
+        else
+        {
+            System.out.println(FontColours.RED + "This course does not exist in the system" + FontColours.RESET);
+        }
+    }
+    public void printCourseDetails()
+    {
+        System.out.println("input Course ");
+    }
 
-      public void getCourse()
-      {
-          String CourseInfoToPrint = enterInformation("Course ID to find");
-          Course courseToPrint = searchForCourse(CourseInfoToPrint);
-          if(courseToPrint != null)
-          {
-              System.out.println(courseToPrint);
-          }
-          else
-          {
-              System.out.println(FontColours.RED + "This course does not exist in the system" + FontColours.RESET);
-          }
-      }
-      public void printCourseDetails()
-      {
-          System.out.println("input Course ");
-      }
+    public void getAllCourses()
+    {
+        for(Course allCourses : CourseInfo)
+        {
+            System.out.println(allCourses);
+        }
+    }
 
-      public void getAllCourses()
-      {
-          for(Course allCourses : CourseInfo)
-          {
-              System.out.println(allCourses);
-          }
-      }
+    public void addCourse()
+    {
+        String courseId = enterInformation("Course ID");
+        String level = enterInformation("Course Level");
+        String title = enterInformation("Course Title");
+        String institution = enterInformation("Course Institution");
 
-      public void addCourse()
-      {
-          String courseId = enterInformation("Course ID");
-          String level = enterInformation("Course Level");
-          String title = enterInformation("Course Title");
-          String institution = enterInformation("Course Institution");
+        Course addCourse = new Course(courseId,level,title,institution);
+        this.CourseInfo.add(addCourse);
+    }
 
-          Course addCourse = new Course(courseId,level,title,institution);
-          this.CourseInfo.add(addCourse);
-      }
+    public void deleteCourse()
+    {
+        if(this.CourseInfo != null)
+        {
+            String courseToFind = enterInformation("Course ID to remove");
+            Course courseToDelete = searchForCourse(courseToFind);
+            if(courseToDelete != null)
+            {
+                CourseInfo.remove(courseToDelete);
+                System.out.println(FontColours.GREEN + "Removed course from system" + FontColours.RESET);
+            }
+            else
+            {
+                System.out.println(FontColours.RED + "There is no course matching that ID" + FontColours.RESET);
+            }
+        }
+    }
 
-      public void deleteCourse()
-      {
-          if(this.CourseInfo != null)
-          {
-              String courseToFind = enterInformation("Course ID to remove");
-              Course courseToDelete = searchForCourse(courseToFind);
-              if(courseToDelete != null)
-              {
-                  System.out.println(FontColours.GREEN + "Removed course from system" + FontColours.RESET);
-              }
-              else
-              {
-                  System.out.println(FontColours.RED + "There is no course matching that ID" + FontColours.RESET);
-              }
-          }
-      }
 }
-
-
-
-
-
-
-

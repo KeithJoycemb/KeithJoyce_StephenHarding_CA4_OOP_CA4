@@ -1,7 +1,7 @@
 package dkit.oop;
 // StudentManager encapsulates the storage and ability
 // to manipulate student objects
-
+import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ public class StudentManager
     {
         this.student = new ArrayList<>();
     }
-
 
     protected void loadStudentsFromFile()
     {
@@ -37,7 +36,7 @@ public class StudentManager
         }
         catch (FileNotFoundException fne)
         {
-            System.out.println("Could not find students.txt file");
+            System.out.println(FontColours.RED + "Could not find student" + FontColours.RESET);
         }
     }
 
@@ -47,7 +46,6 @@ public class StudentManager
         String dateOfBirth = enterField("dateOfBirth");
         String password = enterField("password");
         String email = enterField("email");
-
         Student s = new Student(caoNumber, dateOfBirth, password, email);
 
         if (this.student != null)
@@ -56,12 +54,12 @@ public class StudentManager
             {
                 student.add(s);
             } else {
-                System.out.println("error adding student");
+                System.out.println(FontColours.RED + "Error adding student " + FontColours.RESET);
             }
         }
     }
 
-    private void saveStudentToFile() throws IOException
+    public void saveStudentToFile()
     {
         try (BufferedWriter studentFile = new BufferedWriter(new FileWriter("students.txt")))
         {
@@ -72,9 +70,9 @@ public class StudentManager
                 studentFile.write("\n");
             }
         }
-        catch (FileNotFoundException fne)
+        catch (IOException ioe)
         {
-            System.out.println("could not save Students to file");
+            System.out.println(FontColours.RED + "could not save Students to file" + FontColours.RESET);
         }
     }
 
@@ -92,7 +90,7 @@ public class StudentManager
                 }
             } catch (NumberFormatException nfe)
             {
-                System.out.println("Please enter a valid Cao Number");
+                System.out.println(FontColours.RED + "Please enter a valid CAO number  " + FontColours.RESET);
             }
         }
         return -1;
@@ -106,21 +104,65 @@ public class StudentManager
         return input;
     }
 
-    private Student getStudent(int studentToFind)
+
+    public void deleteStudent()
     {
-        for(Student student: student)
+        if (this.student != null)
         {
-            if(student.getCaoNumber()==(studentToFind))
+            String studentToFind = enterField("StudentToRemove");
+            Student studentToRemove = searchForStudent(Integer.parseInt(studentToFind));
+            if (studentToRemove != null)
+            {
+                student.remove(studentToRemove);
+                System.out.println(FontColours.GREEN + "Removed student from system" + FontColours.RESET);
+            } else {
+                System.out.println(FontColours.RED + "There is no student matching that ID" + FontColours.RESET);
+            }
+        }
+    }
+
+    public Student searchForStudent(int studentToFind)
+    {
+        for(Student student : student)
+        {
+            if(student.getCaoNumber() == studentToFind)
             {
                 return student;
             }
         }
         return null;
     }
-  //  isRegistered( caoNumber){
 
-  //  }
-   //     students.isValid()
+    public void getStudent()
+    {
+        String StudentInfoToPrint = enterField("student to finds cao number");
+        Student studentToPrint = searchForStudent(Integer.parseInt(StudentInfoToPrint));
+        if(studentToPrint != null)
+        {
+            System.out.println(studentToPrint);
+        }
+        else
+        {
+            System.out.println(FontColours.RED + "This student does not exist in the system" + FontColours.RESET);
+        }
+    }
+
+    // log in not working - keith
+//    public Student logIn()
+//    {
+//       Scanner inputCAONum = new Scanner(System.in);
+//        System.out.println("Please enter your CAO number: ");
+//        String caoNum = inputCAONum.next();
+//
+//        Scanner inputPW = new Scanner(System.in);
+//        System.out.println("Please enter your password: ");
+//        String userPW = inputPW.next();
+//
+//        if(caoNum.equals(caoNumber) && userPW.equals(password))
+//        {
+//            System.out.println(FontColours.GREEN + "You have successfully logged in " + FontColours.RESET);
+//        }
+//    }
 
 
 }

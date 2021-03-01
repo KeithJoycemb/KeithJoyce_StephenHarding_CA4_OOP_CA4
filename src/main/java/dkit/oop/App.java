@@ -1,15 +1,14 @@
 package dkit.oop;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  *
  * Notes:
  *  Synchronisation of multiple reads and writes to file is not considered here.
  *
  */
-
 
 public class App
 {
@@ -19,43 +18,90 @@ public class App
     {
         System.out.println("CAO Online - CA4");
         new App().start();
-
     }
-    private void start() {
 
+    private void start()
+    {
         // load students
         StudentManager studentManager = new StudentManager();
         studentManager.loadStudentsFromFile();
-
         // load courses
         CourseManager courseManager = new CourseManager();
         courseManager.loadCoursesFromFile();
-
-
         // load manager to provide functionality to allow a student
         // to login and add/update their course selections
         // This CourseChoicesManager component depends on the
         // StudentManager and the CourseManager,
         // so we 'inject' or pass-in these objects.
         CourseChoicesManager mgr = new CourseChoicesManager(studentManager, courseManager);
-
         // display a menu to do things
-        mainMenuLoop(studentManager, courseManager);
+        mainMenuLoop(studentManager ,courseManager);
+    }
 
+    private void adminMenuLoop(StudentManager studentManager,CourseManager courseManager)
+    {
+        boolean loop = true;
+        AdminMenu menuOption;
+        while (loop)
+        {
+            printAdminMenu();
+            try
+            {
+                menuOption = AdminMenu.values()[Integer.parseInt(keyboard.nextLine().trim())];
+                switch (menuOption)
+                {
+                    case QUIT_APPLICATION:
+                        loop = false;
+                        break;
+                    case ADD_COURSE:
+                        courseManager.addCourse();
+                        break;
+                    case REMOVE_COURSE:
+                        courseManager.deleteCourse();
+                        break;
+                    case DISPLAY_ALL_COURSES:
+                        courseManager.getAllCourses();
+                        break;
+                    case COURSE_DETAILS:
+                        courseManager.getCourse();
+                        break;
+                    case ADD_STUDENT:
+                        studentManager.addStudent();
+                        break;
+                    case REMOVE_STUDENT:
+                        studentManager.deleteStudent();
+                        break;
+                    case DISPLAY_STUDENT:
+                        studentManager.getStudent();
+                        break;
+                    case SAVE_AND_EXIT:
+                        studentManager.saveStudentToFile();
+                        courseManager.saveCoursesToFile();
+                        loop = false;
+                        break;
+                }
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println(FontColours.RED + "Please enter a vaild option" + FontColours.RESET);
+            }
+            catch(ArrayIndexOutOfBoundsException e)
+            {
+                System.out.println(FontColours.RED + "Selection is out of range please try again " + FontColours.RESET);
+            }
+        }
     }
 
     private void mainMenuLoop(StudentManager studentManager, CourseManager courseManager)
     {
         boolean loop = true;
         MainMenu menuOption;
-        int option = -1;
         while (loop)
         {
             printMainMenu();
-            try {
-                option = keyboard.nextInt();
-                keyboard.nextLine();
-                menuOption = MainMenu.values()[option];
+            try
+            {
+                menuOption = MainMenu.values()[Integer.parseInt(keyboard.nextLine().trim())];
                 switch (menuOption)
                 {
                     case QUIT_APPLICATION:
@@ -65,55 +111,16 @@ public class App
                         studentMenuLoop(studentManager,courseManager);
                         break;
                     case ADMIN_MENU:
-                        adminMenuLoop(studentManager,courseManager);
+                        adminMenuLoop(studentManager, courseManager);
                 }
-            } catch (InputMismatchException ime)
+            }
+            catch (IllegalArgumentException e)
             {
                 System.out.println("please enter a valid option");
             }
-        }
-    }
-
-    private void adminMenuLoop(StudentManager studentManager, CourseManager courseManager)
-    {
-        boolean loop = true;
-        AdminMenu menuOption;
-        int option = -1;
-        while (loop)
-        {
-            printAdminMenu();
-            try
+            catch(ArrayIndexOutOfBoundsException e)
             {
-                option = keyboard.nextInt();
-                keyboard.nextLine();
-                menuOption = AdminMenu.values()[option];
-                switch (menuOption)
-                {
-                    case QUIT_APPLICATION:
-                        loop = false;
-                        break;
-                    case REMOVE_COURSE:
-                        //;
-                        break;
-                    case DISPLAY_ALL_COURSES:
-                        //  ;
-                        break;
-                    case COURSE_DETAILS:
-                        // ;
-                        break;
-                    case ADD_STUDENT:
-                        studentManager.addStudent();
-                        break;
-                    case REMOVE_STUDENT:
-                        studentManager.removeStudent();
-                    case DISPLAY_STUDENT:
-                        //;
-                    case SAVE_AND_EXIT:
-                        //;
-                }
-            } catch (InputMismatchException ime)
-            {
-                System.out.println("please enter a valid option");
+                System.out.println("Selection out of rang. try again");
             }
         }
     }
@@ -122,14 +129,13 @@ public class App
     {
         boolean loop = true;
         StudentMenu menuOption;
-        int option = -1;
         while (loop)
         {
             printStudentMenu();
-            try {
-                option = keyboard.nextInt();
-                keyboard.nextLine();
-                menuOption = StudentMenu.values()[option];
+            try
+            {
+
+                menuOption = StudentMenu.values()[Integer.parseInt(keyboard.nextLine().trim())];
                 switch (menuOption)
                 {
                     case QUIT_APPLICATION:
@@ -139,10 +145,10 @@ public class App
                         //;
                         break;
                     case DISPLAY_COURSE:
-                        //;
+                        courseManager.getCourse();
                         break;
                     case DISPLAY_ALL_COURSES:
-                        //;
+                        courseManager.getAllCourses();
                         break;
                     case DISPLAY_CURRENT_CHOICES:
                         //;
@@ -151,14 +157,20 @@ public class App
                         //;
                         break;
                     case LOG_OUT:
-                        //;
+                        loop = false;
                         break;
                 }
-            } catch (InputMismatchException ime)
+            }
+            catch (IllegalArgumentException e)
             {
                 System.out.println("please enter a valid option");
             }
+            catch(ArrayIndexOutOfBoundsException e)
+            {
+                System.out.println("Selection out of rang. try again");
+            }
         }
+
     }
 
     private void printAdminMenu()
