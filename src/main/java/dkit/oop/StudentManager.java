@@ -2,9 +2,6 @@ package dkit.oop;
 // StudentManager encapsulates the storage and ability
 // to manipulate student objects
 
-
-
-
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
